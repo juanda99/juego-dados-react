@@ -4,20 +4,32 @@ import Player from './Player.jsx'
 
 function App() {
   // definimos nuestras variables de estado de la app
-  const [score, setScore] = useState([8, 17])
+  const [score, setScore] = useState([0, 0])
   const [currentScore, setCurrentScore] = useState(0)
   const [activePlayer, setActivePlayer] = useState(0)
   const [dice, setDice] = useState(0)
 
-  const handleNewGame = () => console.log('New game')
+  const handleNewGame = () => {
+    setScore([0, 0])
+    setCurrentScore(0)
+    setActivePlayer(0)
+    setDice(0)
+  }
   const handleRollDice = () => {
     // obtener un número aleatorio entre 1 y 6
     const diceNumber = Math.trunc(Math.random() * 6) + 1
     setDice(diceNumber)
     setCurrentScore(currentScore + diceNumber)
   }
-  function handleHold() {
-    console.log('Hold')
+
+  const handleHold = () => {
+    // actualizar el score del jugador activo
+    const newScore = [...score]
+    newScore[activePlayer] += currentScore
+    setScore(newScore)
+    // resetear el current score y cambiar de jugador
+    setCurrentScore(0)
+    setActivePlayer(activePlayer === 0 ? 1 : 0)
   }
 
   return (
