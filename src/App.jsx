@@ -1,5 +1,12 @@
 import { useState } from 'react'
 import './App.css'
+// importamos imagen de dice-1.png
+import dice1 from './imagenes/dice-1.png'
+import dice2 from './imagenes/dice-2.png'
+import dice3 from './imagenes/dice-3.png'
+import dice4 from './imagenes/dice-4.png'
+import dice5 from './imagenes/dice-5.png'
+import dice6 from './imagenes/dice-6.png'
 import Player from './Player.jsx'
 import { WINNER_SCORE, WINNER_MESSAGE } from './constants'
 
@@ -9,6 +16,8 @@ function App() {
   const [currentScore, setCurrentScore] = useState(0)
   const [activePlayer, setActivePlayer] = useState(0)
   const [dice, setDice] = useState(0)
+
+  const dados = [null, dice1, dice2, dice3, dice4, dice5, dice6]
 
   const handleNewGame = () => {
     setScore([0, 0])
@@ -54,13 +63,7 @@ function App() {
         currentScore={activePlayer === 1 && currentScore}
         isActive={activePlayer === 1}
       />
-      {dice && (
-        <img
-          src={`/imagenes/dice-${dice}.png`}
-          alt="Playing dice"
-          className="dice"
-        />
-      )}
+      {dice && <img src={dados[dice]} alt="Playing dice" className="dice" />}
       <button className="btn btn--new" onClick={handleNewGame}>
         🔄 New game
       </button>
