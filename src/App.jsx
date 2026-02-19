@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import Player from './Player.jsx'
+import { WINNER_SCORE, WINNER_MESSAGE } from './constants'
 
 function App() {
   // definimos nuestras variables de estado de la app
@@ -19,6 +20,13 @@ function App() {
     // obtener un número aleatorio entre 1 y 6
     const diceNumber = Math.trunc(Math.random() * 6) + 1
     setDice(diceNumber)
+    // si el número es 1, resetear el current score y cambiar de jugador
+    if (diceNumber === 1) {
+      setCurrentScore(0)
+      setActivePlayer(activePlayer === 0 ? 1 : 0)
+      return
+    }
+    // si el número no es 1, sumar el número al current score y mostrarlo en el jugador activo
     setCurrentScore(currentScore + diceNumber)
   }
 
@@ -56,10 +64,18 @@ function App() {
       <button className="btn btn--new" onClick={handleNewGame}>
         🔄 New game
       </button>
-      <button className="btn btn--roll" onClick={handleRollDice}>
+      <button
+        className="btn btn--roll"
+        onClick={handleRollDice}
+        disabled={score[0] >= WINNER_SCORE || score[1] >= WINNER_SCORE}
+      >
         🎲 Roll dice
       </button>
-      <button className="btn btn--hold" onClick={handleHold}>
+      <button
+        className="btn btn--hold"
+        onClick={handleHold}
+        disabled={score[0] >= WINNER_SCORE || score[1] >= WINNER_SCORE}
+      >
         📥 Hold
       </button>
     </main>
